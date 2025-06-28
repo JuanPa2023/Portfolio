@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juan Pablo Saracino | Portfolio</title>
+  <link rel="stylesheet" href="main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="logo.png" />
+</head>
+<body>
+  <div id="preloader">Cargando...</div>
+  <header class="glass">
+    <nav>
+      <div class="logo">
+        <div class="name-title">
+          <span class="name">Juan Pablo Saracino</span>
+          <span class="title">Ingeniero Mecatrónico | Especialista en Machine Learning</span>
+        </div>
+      </div>
+      <label for="menu-toggle" class="menu-icon"><i class="fas fa-bars"></i></label>
+      <ul class="nav-links">
+        <li><a href="#hero">Inicio</a></li>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#skills">Habilidades</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li>
+          <div class="dark-toggle-container">
+            <input type="checkbox" id="darkToggle" class="toggle-checkbox">
+            <label for="darkToggle" class="toggle-label">
+              <i class="fas fa-moon"></i>
+              <i class="fas fa-sun"></i>
+              <span class="toggle-ball"></span>
+            </label>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="hero">
+    <div class="hero-content">
+      <h1><span class="typewriter"></span></h1>
+      <p>Desarrollador de Modelos de IA y Soluciones Inteligentes</p>
+      <a href="#proyectos" class="cta">Ver proyectos</a>
+    </div>
+  </section>
+
+  <section id="proyectos">
+    <h2>Mis <span>Proyectos</span></h2>
+    <div class="project-grid">
+      <div class="card">
+        <img src="projects/Robotica/Robot_2_GDL/Cinematica_inversa/screenshot.png" alt="Robot">
+        <div class="card-content">
+          <h3>Robótica 2 GDL</h3>
+          <p>Brazo robótico controlado por AS5600 con Arduino.</p>
+          <a href="projects/Robotica/Robot_2_GDL/Cinematica_inversa/main.ino">Ver código</a>
+        </div>
+      </div>
+      <!-- Proyecto 2: SignGlasses -->
+      <div class="card">
+        <img src="projects/SignGlasses/screenshot.png" alt="SignGlasses Traductor de LSA">
+        <div class="card-content">
+          <h3>SignGlasses Traductor de LSA</h3>
+          <p>Sistema de visión artificial con modelos de ML para interpretar lenguaje de señas en tiempo real.</p>
+          <a href="https://github.com/JuanPa2023/SignGlasses" target="_blank">Ver código</a>
+        </div>
+      </div>
+            <!-- Proyecto 3: SignApp -->
+      <div class="card">
+        <img src="projects/SignApp/screenshot.png" alt="SignApp Aplicación Traductor de LSA">
+        <div class="card-content">
+          <h3>SignApp Traductor de LSA</h3>
+          <p>Sistema de visión artificial con modelos de ML para interpretar lenguaje de señas en tiempo real.</p>
+          <a href="https://github.com/JuanPa2023/Portfolio/tree/main/projects/SignApp" target="_blank">Ver código</a>
+        </div>
+      </div>
+      <!-- Más proyectos pueden agregarse aquí -->
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Habilidades</h2>
+    <div class="skills-container">
+      <div class="bar"><span style="width: 90%">Arduino</span></div>
+      <div class="bar"><span style="width: 85%">Electrónica</span></div>
+      <div class="bar"><span style="width: 80%">Python</span></div>
+      <div class="bar"><span style="width: 75%">Machine Learning</span></div>
+      <div class="bar"><span style="width: 70%">Analisis de Datos</span></div>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <form action="https://formspree.io/f/mblyqzrg" method="POST" class="contact-form">
+      <input type="text" name="name" placeholder="Nombre" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <textarea name="message" placeholder="Mensaje" required></textarea>
+      <button type="submit">Enviar mensaje</button>
+      <!-- Mensaje de confirmación oculto -->
+      <div id="form-message" style="display: none; margin-top: 20px; padding: 15px; background: #4CAF50; color: white; border-radius: 5px; text-align: center;">
+        ¡Mensaje enviado con éxito! Te responderé a la brevedad.
+      </div>
+    </form>
+    <div class="contact-info">
+      <a href="mailto:saracinojuanpablo@gmail.com"><i class="fas fa-envelope"></i></a>
+      <a href="https://github.com/juanpa2023"><i class="fab fa-github"></i></a>
+    </div>
+  </section>
+
+  <footer>
+    <p><span class="typewriter-footer"></span></p>
+  </footer>
+
+  <script>
+    // Preloader
+    window.addEventListener("load", () => {
+      document.getElementById("preloader").style.display = "none";
+    });
+
+    // Efecto de escritura
+    const typewriter = document.querySelector(".typewriter");
+    let text = "Transformando ideas en experiencias digitales";
+    let i = 0;
+    function typing() {
+      if (i < text.length) {
+        typewriter.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, 80);
+      }
+    }
+    typing();
+
+    // Footer text
+    document.querySelector(".typewriter-footer").textContent = "© 2025 Juan Pablo Saracino. Portfolio profesional.";
+
+    // Dark mode toggle
+    const darkToggle = document.getElementById("darkToggle");
+    const root = document.documentElement;
+    
+    darkToggle.onchange = () => {
+      root.classList.toggle("dark-mode");
+      localStorage.setItem("dark-mode", root.classList.contains("dark-mode"));
+    };
+
+    // Cargar preferencia de modo oscuro
+    if (localStorage.getItem("dark-mode") === "true") {
+      root.classList.add("dark-mode");
+      darkToggle.checked = true;
+    }
+
+    // Manejo de formulario
+ const contactForm = document.querySelector('.contact-form');
+  const formMessage = document.getElementById('form-message');
+  
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    try {
+      // Enviar datos a Formspree
+      const formData = new FormData(contactForm);
+      const response = await fetch(contactForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        // Mostrar mensaje de éxito
+        formMessage.style.display = 'block';
+        formMessage.style.backgroundColor = '#4CAF50';
+        formMessage.textContent = '¡Mensaje enviado con éxito! Te responderé a la brevedad.';
+        
+        // Ocultar mensaje después de 5 segundos
+        setTimeout(() => {
+          formMessage.style.display = 'none';
+        }, 5000);
+        
+        // Resetear formulario
+        contactForm.reset();
+      } else {
+        // Mostrar error
+        formMessage.style.display = 'block';
+        formMessage.style.backgroundColor = '#f44336';
+        formMessage.textContent = 'Error al enviar el mensaje. Por favor intenta nuevamente.';
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      formMessage.style.display = 'block';
+      formMessage.style.backgroundColor = '#f44336';
+      formMessage.textContent = 'Error de conexión. Por favor intenta más tarde.';
+    }
+  });
+</script>
+</body>
+</html>
