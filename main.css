@@ -5,7 +5,7 @@
   --dark-bg: #0f172a;
   --light-bg: #f8fafc;
   --text-dark: #0f172a;
-  --text-light: #e2e8f0;
+  --text-light: #ffffff;
   --radius: 12px;
 }
 
@@ -62,8 +62,19 @@ nav {
 
 nav .logo {
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: var(--color-primary);
+  line-height: 1.2;
+}
+
+nav .logo small {
+  font-weight: normal;
+  font-size: 0.8rem;
+  color: var(--text-dark);
+}
+
+.dark-mode nav .logo small {
+  color: var(--text-light);
 }
 
 nav ul {
@@ -79,6 +90,7 @@ nav ul li button {
   background: none;
   border: none;
   cursor: pointer;
+  font-weight: bold;
   font-size: 1rem;
 }
 
@@ -99,6 +111,11 @@ nav ul li button {
   color: white;
   position: relative;
   overflow: hidden;
+}
+
+#hero .hero-content h1 {
+  margin-bottom: 1.5rem;
+  margin-top: -100px;
 }
 
 #hero::before {
