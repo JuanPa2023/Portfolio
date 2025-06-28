@@ -11,7 +11,10 @@
   <div id="preloader">Cargando...</div>
   <header class="glass">
     <nav>
-      <div class="logo">Juan Pablo Saracino</div>
+      <div class="logo">
+        Juan Pablo Saracino
+        <small>Ingeniero Mecatrónico</small>
+      </div>
       <input type="checkbox" id="menu-toggle" />
       <label for="menu-toggle" class="menu-icon"><i class="fas fa-bars"></i></label>
       <ul class="nav-links">
@@ -19,7 +22,16 @@
         <li><a href="#proyectos">Proyectos</a></li>
         <li><a href="#skills">Habilidades</a></li>
         <li><a href="#contacto">Contacto</a></li>
-        <li><button id="darkToggle">🌓</button></li>
+        <li>
+          <div class="dark-toggle-container">
+            <input type="checkbox" id="darkToggle" class="toggle-checkbox">
+            <label for="darkToggle" class="toggle-label">
+              <i class="fas fa-moon"></i>
+              <i class="fas fa-sun"></i>
+              <span class="toggle-ball"></span>
+            </label>
+          </div>
+        </li>
       </ul>
     </nav>
   </header>
@@ -43,6 +55,7 @@
           <a href="projects/Robotica/Robot_2_GDL/Cinematica_inversa/main.ino">Ver código</a>
         </div>
       </div>
+      <!-- Más proyectos pueden agregarse aquí -->
     </div>
   </section>
 
@@ -58,11 +71,11 @@
 
   <section id="contacto">
     <h2>Contacto</h2>
-    <form class="contact-form">
-      <input type="text" placeholder="Nombre" required>
-      <input type="email" placeholder="Email" required>
-      <textarea placeholder="Mensaje" required></textarea>
-      <button type="submit">Enviar</button>
+    <form action="https://formspree.io/f/mdornqgg" method="POST" class="contact-form">
+      <input type="text" name="name" placeholder="Nombre" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <textarea name="message" placeholder="Mensaje" required></textarea>
+      <button type="submit">Enviar mensaje</button>
     </form>
     <div class="contact-info">
       <a href="mailto:saracinojuanpablo@gmail.com"><i class="fas fa-envelope"></i></a>
@@ -75,21 +88,12 @@
   </footer>
 
   <script>
-    const darkToggle = document.getElementById("darkToggle");
-    const root = document.documentElement;
-    darkToggle.onclick = () => {
-      root.classList.toggle("dark-mode");
-      localStorage.setItem("dark-mode", root.classList.contains("dark-mode"));
-    };
-
-    if (localStorage.getItem("dark-mode") === "true") {
-      root.classList.add("dark-mode");
-    }
-
+    // Preloader
     window.addEventListener("load", () => {
       document.getElementById("preloader").style.display = "none";
     });
 
+    // Efecto de escritura
     const typewriter = document.querySelector(".typewriter");
     let text = "Transformando ideas en experiencias digitales";
     let i = 0;
@@ -102,7 +106,33 @@
     }
     typing();
 
+    // Footer text
     document.querySelector(".typewriter-footer").textContent = "© 2025 Juan Sara. Portfolio profesional.";
+
+    // Dark mode toggle
+    const darkToggle = document.getElementById("darkToggle");
+    const root = document.documentElement;
+    
+    darkToggle.onchange = () => {
+      root.classList.toggle("dark-mode");
+      localStorage.setItem("dark-mode", root.classList.contains("dark-mode"));
+    };
+
+    // Cargar preferencia de modo oscuro
+    if (localStorage.getItem("dark-mode") === "true") {
+      root.classList.add("dark-mode");
+      darkToggle.checked = true;
+    }
+
+    // Manejo de formulario
+    const contactForm = document.querySelector('.contact-form');
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Simulación de envío exitoso
+      alert('¡Mensaje enviado con éxito! Te responderé a la brevedad.');
+      contactForm.reset();
+    });
   </script>
 </body>
 </html>
