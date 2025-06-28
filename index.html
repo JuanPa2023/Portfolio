@@ -3,46 +3,106 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portafolio de Juan</title>
-  <link rel="stylesheet" href="styles/main.css" />
+  <title>Juan Pablo Saracino | Portfolio</title>
+  <link rel="stylesheet" href="main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <header>
-    <div class="container header-inner">
-      <h1>Juan Sara</h1>
-      <nav>
-        <a href="#projects">Proyectos</a>
-        <a href="#contact">Contacto</a>
-      </nav>
-    </div>
+  <div id="preloader">Cargando...</div>
+  <header class="glass">
+    <nav>
+      <div class="logo">Juan Pablo Saracino</div>
+      <input type="checkbox" id="menu-toggle" />
+      <label for="menu-toggle" class="menu-icon"><i class="fas fa-bars"></i></label>
+      <ul class="nav-links">
+        <li><a href="#hero">Inicio</a></li>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#skills">Habilidades</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li><button id="darkToggle">🌓</button></li>
+      </ul>
+    </nav>
   </header>
 
-  <div class="container">
-    <main id="projects">
-      <section class="project-card">
-        <img src="projects/hello-world/screenshot.png" alt="Hola Mundo">
-        <div class="project-card-content">
-          <h3>Hola Mundo</h3>
-          <p>Mi primer proyecto web: muestra un saludo. Tecnologías: HTML puro.</p>
-          <a href="projects/hello-world/hello.html" target="_blank">Ver demo</a>
-        </div>
-      </section>
-
-      <section class="project-card">
-        <img src="projects/Robotica/Robot_2_GDL/Cinematica_inversa/screenshot.png" alt="Cinemática Inversa">
-        <div class="project-card-content">
-          <h3>Robótica – Cinemática Inversa</h3>
-          <p>Control de posición de brazo 2 GDL con Arduino, AS5600 y control proporcional.</p>
-          <a href="projects/Robotica/Robot_2_GDL/Cinematica_inversa/main.ino" target="_blank">Ver código</a>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <footer id="contact">
-    <div class="container">
-      <p>Contacto: <a href="mailto:juan@ejemplo.com">juan@ejemplo.com</a> • <a href="https://github.com/juanpa2023">GitHub</a></p>
+  <section id="hero">
+    <div class="hero-content">
+      <h1><span class="typewriter"></span></h1>
+      <p>Diseñador y Desarrollador Frontend</p>
+      <a href="#proyectos" class="cta">Ver proyectos</a>
     </div>
+  </section>
+
+  <section id="proyectos">
+    <h2>Mis <span>Proyectos</span></h2>
+    <div class="project-grid">
+      <div class="card">
+        <img src="projects/Robotica/Robot_2_GDL/Cinematica_inversa/screenshot.png" alt="Robot">
+        <div class="card-content">
+          <h3>Robótica 2 GDL</h3>
+          <p>Brazo robótico controlado por AS5600 con Arduino.</p>
+          <a href="projects/Robotica/Robot_2_GDL/Cinematica_inversa/main.ino">Ver código</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Habilidades</h2>
+    <div class="skills-container">
+      <div class="bar"><span style="width: 90%">Arduino</span></div>
+      <div class="bar"><span style="width: 85%">C++</span></div>
+      <div class="bar"><span style="width: 80%">Python</span></div>
+      <div class="bar"><span style="width: 75%">Diseño CAD</span></div>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <form class="contact-form">
+      <input type="text" placeholder="Nombre" required>
+      <input type="email" placeholder="Email" required>
+      <textarea placeholder="Mensaje" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+    <div class="contact-info">
+      <a href="mailto:saracinojuanpablo@correo.com"><i class="fas fa-envelope"></i></a>
+      <a href="https://github.com/juanpa2023"><i class="fab fa-github"></i></a>
+    </div>
+  </section>
+
+  <footer>
+    <p><span class="typewriter-footer"></span></p>
   </footer>
+
+  <script>
+    const darkToggle = document.getElementById("darkToggle");
+    const root = document.documentElement;
+    darkToggle.onclick = () => {
+      root.classList.toggle("dark-mode");
+      localStorage.setItem("dark-mode", root.classList.contains("dark-mode"));
+    };
+
+    if (localStorage.getItem("dark-mode") === "true") {
+      root.classList.add("dark-mode");
+    }
+
+    window.addEventListener("load", () => {
+      document.getElementById("preloader").style.display = "none";
+    });
+
+    const typewriter = document.querySelector(".typewriter");
+    let text = "Transformando ideas en experiencias digitales";
+    let i = 0;
+    function typing() {
+      if (i < text.length) {
+        typewriter.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, 80);
+      }
+    }
+    typing();
+
+    document.querySelector(".typewriter-footer").textContent = "© 2025 Juan Sara. Portfolio profesional.";
+  </script>
 </body>
 </html>
