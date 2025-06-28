@@ -46,8 +46,8 @@ Permitir el ingreso de un ángulo deseado desde el monitor serie, calcular el er
 
 1. Cargar el código en el Arduino.
 2. Abrir el monitor serie a 115200 baudios.
-3. Ingresar un valor en grados (ej: `30` o `-45`).
-5. Ahora con cinematica Directa podemos agregar directamene las coordenadas cartesiandas x e y
+3. Con la Cinematica Directa ingresar un valor en grados (ej: `30` o `-45`).
+5. Ahora con cinematica Inversa podemos agregar directamene las coordenadas cartesiandas x e y
 6. El motor se moverá la cantidad indicada respecto a su posición actual.
 
 
