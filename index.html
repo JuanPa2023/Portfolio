@@ -1,27 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Portafolio</title>
-  <link rel="stylesheet" href="styles/main.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portafolio de Juan</title>
+  <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
   <header>
-    <h1>Saracino Juan Pablo</h1>
-    <p>Ingeniero Mecatrónico | Desarrollador Software & Hardware</p>
+    <div class="container header-inner">
+      <h1>Juan Sara</h1>
+      <nav>
+        <a href="#projects">Proyectos</a>
+        <a href="#contact">Contacto</a>
+      </nav>
+    </div>
   </header>
-  <main id="projects">
-    <section class="project-card">
-      <img src="projects/Robotica/Robot_2_GDL/Cinematica_inversa/screenshot.png" alt="Proyecto Robótica 2 GDL">
-      <h3>Robótica - Cinemática Inversa (2 GDL)</h3>
-      <p>Implementación de la cinemática inversa para un brazo robótico de 2 grados de libertad. Desarrollo en Arduino C++, incluye control de ángulos y visualización en tiempo real.</p>
-      <a href="projects/Robotica/Robot_2_GDL/Cinematica_inversa/main.ino" target="_blank">Ver código</a>
-    </section>
 
-  </main>
-  <footer>
-    <p>Contacto: saracinojuanpablo@gmail.com • GitHub: @SaracinoJuanPablo</p>
+  <div class="container">
+    <main id="projects">
+      <section class="project-card">
+        <img src="projects/hello-world/screenshot.png" alt="Hola Mundo">
+        <div class="project-card-content">
+          <h3>Hola Mundo</h3>
+          <p>Mi primer proyecto web: muestra un saludo. Tecnologías: HTML puro.</p>
+          <a href="projects/hello-world/hello.html" target="_blank">Ver demo</a>
+        </div>
+      </section>
+
+      <section class="project-card">
+        <img src="projects/Robotica/Robot_2_GDL/Cinematica_inversa/screenshot.png" alt="Cinemática Inversa">
+        <div class="project-card-content">
+          <h3>Robótica – Cinemática Inversa</h3>
+          <p>Control de posición de brazo 2 GDL con Arduino, AS5600 y control proporcional.</p>
+          <a href="projects/Robotica/Robot_2_GDL/Cinematica_inversa/main.ino" target="_blank">Ver código</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer id="contact">
+    <div class="container">
+      <p>Contacto: <a href="mailto:juan@ejemplo.com">juan@ejemplo.com</a> • <a href="https://github.com/juanpa2023">GitHub</a></p>
+    </div>
   </footer>
 </body>
 </html>
