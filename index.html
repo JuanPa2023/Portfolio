@@ -96,6 +96,10 @@
       <input type="email" name="email" placeholder="Email" required>
       <textarea name="message" placeholder="Mensaje" required></textarea>
       <button type="submit">Enviar mensaje</button>
+      <!-- Mensaje de confirmación oculto -->
+      <div id="form-message" style="display: none; margin-top: 20px; padding: 15px; background: #4CAF50; color: white; border-radius: 5px; text-align: center;">
+        ¡Mensaje enviado con éxito! Te responderé a la brevedad.
+      </div>
     </form>
     <div class="contact-info">
       <a href="mailto:saracinojuanpablo@gmail.com"><i class="fas fa-envelope"></i></a>
@@ -145,14 +149,49 @@
     }
 
     // Manejo de formulario
-    const contactForm = document.querySelector('.contact-form');
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
+ const contactForm = document.querySelector('.contact-form');
+  const formMessage = document.getElementById('form-message');
+  
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    try {
+      // Enviar datos a Formspree
+      const formData = new FormData(contactForm);
+      const response = await fetch(contactForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
       
-      // Simulación de envío exitoso
-      alert('¡Mensaje enviado con éxito! Te responderé a la brevedad.');
-      contactForm.reset();
-    });
-  </script>
+      if (response.ok) {
+        // Mostrar mensaje de éxito
+        formMessage.style.display = 'block';
+        formMessage.style.backgroundColor = '#4CAF50';
+        formMessage.textContent = '¡Mensaje enviado con éxito! Te responderé a la brevedad.';
+        
+        // Ocultar mensaje después de 5 segundos
+        setTimeout(() => {
+          formMessage.style.display = 'none';
+        }, 5000);
+        
+        // Resetear formulario
+        contactForm.reset();
+      } else {
+        // Mostrar error
+        formMessage.style.display = 'block';
+        formMessage.style.backgroundColor = '#f44336';
+        formMessage.textContent = 'Error al enviar el mensaje. Por favor intenta nuevamente.';
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      formMessage.style.display = 'block';
+      formMessage.style.backgroundColor = '#f44336';
+      formMessage.textContent = 'Error de conexión. Por favor intenta más tarde.';
+    }
+  });
+</script>
 </body>
 </html>
