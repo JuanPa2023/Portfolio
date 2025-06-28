@@ -1,0 +1,313 @@
+/*Proyecto de Fundamentos de robotica 2025 UNLZ facultad de ingenieria
+alumnos: Gauna Ignacio, Saracino Juan pablo*/
+#include <Wire.h>
+#include <Arduino.h>
+#include "AS5600.h"
+
+// ————— Pines de conexión —————
+// Sensores AS5600
+#define AS5600_DIR_PIN_0    4  // Pin de dirección para sensor 0
+#define AS5600_DIR_PIN_1    14 // Pin de dirección para sensor 1
+
+// Motor 1 (Articulación 1)
+#define ENA_PIN 27
+#define IN1_PIN 26
+#define IN2_PIN 25
+
+// Motor 2 (Articulación 2)
+#define ENB_PIN 33
+#define IN3_PIN 32
+#define IN4_PIN 15//35
+
+// ————— Parámetros del control —————
+// Parámetros PID para ambos motores
+const float Kp = 2.0;              // Ganancia proporcional
+const float Ki = 0.5;              // Ganancia integral
+const float Kd = 0.5;              // Ganancia derivativa
+
+const int PWM_MAX = 100;           // Máximo PWM permitido (0-255)
+const float TOLERANCIA = 2.0;      // Grados de tolerancia
+const unsigned long T_MUESTREO = 2; // Tiempo de muestreo (ms)
+const float anguloMaximo = 360;    // Rango máximo de movimiento
+
+// Configuración de sensores
+AS5600 as5600_0(&Wire);    // Sensor para articulación 1
+AS5600 as5600_1(&Wire1);   // Sensor para articulación 2
+
+// Variables para almacenar los offsets
+uint16_t offset0 = 0;
+uint16_t offset1 = 0;
+
+// Variables de control para cada motor
+float anguloObjetivo0 = 0;
+float anguloObjetivo1 = 0;
+bool moviendose0 = false;
+bool moviendose1 = false;
+
+float errorAcumulado0 = 0.0;
+float errorAcumulado1 = 0.0;
+float errorAnterior0 = 0.0;
+float errorAnterior1 = 0.0;
+
+unsigned long tiempoAnterior = 0;
+
+// ————— Funciones auxiliares —————
+// Función para calcular ángulo relativo al offset
+float calculateRelativeAngle(uint16_t currentRaw, uint16_t referenceOffset) {
+  int32_t difference = currentRaw - referenceOffset;
+  if (difference < 0) difference += 4096;
+  return (difference * 360.0) / 4096.0;
+}
+
+// Función de lectura de ángulo
+float leerAnguloBrazo(int motor) {
+  if (motor == 0) {
+    uint16_t raw0 = as5600_0.rawAngle();
+    return calculateRelativeAngle(raw0, offset0);
+  } else {
+    uint16_t raw1 = as5600_1.rawAngle();
+    return calculateRelativeAngle(raw1, offset1);
+  }
+}
+
+// Función de control del motor
+void moverMotor(int motor, float velocidad) {
+  velocidad = constrain(velocidad, -PWM_MAX, PWM_MAX);
+  int pwm = abs(velocidad);
+  
+  if (motor == 0) {
+    if (velocidad > 0) {
+      digitalWrite(IN1_PIN, LOW);
+      digitalWrite(IN2_PIN, HIGH);
+    } else if (velocidad < 0) {
+      digitalWrite(IN1_PIN, HIGH);
+      digitalWrite(IN2_PIN, LOW);
+    } else {
+      digitalWrite(IN1_PIN, LOW);
+      digitalWrite(IN2_PIN, LOW);
+    }
+    analogWrite(ENA_PIN, pwm);
+  } else {
+    if (velocidad > 0) {
+      digitalWrite(IN3_PIN, LOW);
+      digitalWrite(IN4_PIN, HIGH);
+    } else if (velocidad < 0) {
+      digitalWrite(IN3_PIN, HIGH);
+      digitalWrite(IN4_PIN, LOW);
+    } else {
+      digitalWrite(IN3_PIN, LOW);
+      digitalWrite(IN4_PIN, LOW);
+    }
+    analogWrite(ENB_PIN, pwm);
+  }
+}
+
+void frenarMotor(int motor) {
+  if (motor == 0) {
+    digitalWrite(IN1_PIN, LOW);
+    digitalWrite(IN2_PIN, LOW);
+    analogWrite(ENA_PIN, 0);
+  } else {
+    digitalWrite(IN3_PIN, LOW);
+    digitalWrite(IN4_PIN, LOW);
+    analogWrite(ENB_PIN, 0);
+  }
+}
+
+// Función para escanear dispositivos en un bus I2C
+void scanI2CBus(TwoWire &wire, const char* busName) {
+  byte error, address;
+  int devices = 0;
+
+  Serial.print("\nEscaneando bus ");
+  Serial.println(busName);
+  
+  for(address = 1; address < 127; address++) {
+    wire.beginTransmission(address);
+    error = wire.endTransmission();
+    
+    if (error == 0) {
+      Serial.print("Dispositivo encontrado en 0x");
+      if (address < 16) Serial.print("0");
+      Serial.print(address, HEX);
+      Serial.println();
+      devices++;
+    }
+    else if (error == 4) {
+      Serial.print("Error desconocido en 0x");
+      if (address < 16) Serial.print("0");
+      Serial.println(address, HEX);
+    }
+  }
+  
+  if (devices == 0) {
+    Serial.println("No se encontraron dispositivos");
+  }
+  Serial.println();
+}
+
+void setup() {
+  Serial.begin(115200);
+  delay(500);
+  
+  // Mensaje de bienvenida
+  Serial.println("=================================");
+  Serial.println("    BRAZO ROBOTICO - 2 ESLABONES");
+  Serial.println("=================================");
+  Serial.println("\nINSTRUCCIONES:");
+  Serial.println("• Escribe dos angulos separados por coma (ej: 90,45)");
+  Serial.println("• Rango: 0 a 360 grados");
+  Serial.println("• Presiona ENTER");
+  Serial.println("---------------------------------");
+
+  // Inicializar buses I2C
+  Wire.begin();
+  Wire1.begin(18, 19);  // SDA=18, SCL=19 para segundo sensor
+
+  // Configurar pines de los motores
+  pinMode(IN1_PIN, OUTPUT);
+  pinMode(IN2_PIN, OUTPUT);
+  pinMode(ENA_PIN, OUTPUT);
+  pinMode(IN3_PIN, OUTPUT);
+  pinMode(IN4_PIN, OUTPUT);
+  pinMode(ENB_PIN, OUTPUT);
+  
+  frenarMotor(0);
+  frenarMotor(1);
+
+  // Inicializar sensores
+  if (as5600_0.begin(AS5600_DIR_PIN_0)) {
+    as5600_0.setDirection(AS5600_CLOCK_WISE);
+    Serial.print("Sensor 0 conectado: ");
+    Serial.println(as5600_0.isConnected() ? "SI" : "NO");
+    offset0 = as5600_0.rawAngle();
+    Serial.print("Offset sensor 0: ");
+    Serial.println(offset0);
+  } else {
+    Serial.println("Error iniciando sensor 0");
+  }
+
+  if (as5600_1.begin(AS5600_DIR_PIN_1)) {
+    as5600_1.setDirection(AS5600_COUNTERCLOCK_WISE);
+    Serial.print("Sensor 1 conectado: ");
+    Serial.println(as5600_1.isConnected() ? "SI" : "NO");
+    offset1 = as5600_1.rawAngle();
+    Serial.print("Offset sensor 1: ");
+    Serial.println(offset1);
+  } else {
+    Serial.println("Error iniciando sensor 1");
+  }
+
+  // Escaneo de buses I2C para diagnóstico
+  scanI2CBus(Wire, "I2C0 (Wire)");
+  scanI2CBus(Wire1, "I2C1 (Wire1)");
+
+  Serial.print("Posicion inicial Motor 0: ");
+  Serial.print(leerAnguloBrazo(0), 1);
+  Serial.print(" grados\n");
+  Serial.print("Posicion inicial Motor 1: ");
+  Serial.print(leerAnguloBrazo(1), 1);
+  Serial.println(" grados\nListo! Escribe posiciones:");
+  
+  tiempoAnterior = millis();
+}
+
+void loop() {
+  // Procesar comandos seriales
+  if (Serial.available() > 0) {
+    String input = Serial.readStringUntil('\n');
+    int commaIndex = input.indexOf(',');
+    
+    if (commaIndex > 0) {
+      anguloObjetivo0 = input.substring(0, commaIndex).toFloat();
+      anguloObjetivo1 = input.substring(commaIndex + 1).toFloat();
+      
+      if (anguloObjetivo0 >= 0 && anguloObjetivo0 <= anguloMaximo && 
+          anguloObjetivo1 >= 0 && anguloObjetivo1 <= anguloMaximo) {
+           
+
+        // Corrección de bordes
+        if (anguloObjetivo0 < 5.0) anguloObjetivo0 = 5.0;
+        if (anguloObjetivo0 > 180.0) anguloObjetivo0 = 180.0;
+        if (anguloObjetivo1 < 5.0) anguloObjetivo1 = 5.0;
+        if (anguloObjetivo1 > 180.0) anguloObjetivo1 = 180.0;    
+
+        moviendose0 = true;
+        moviendose1 = true;
+        
+        Serial.print("Moviendo Motor 0 de ");
+        Serial.print(leerAnguloBrazo(0), 1);
+        Serial.print(" a ");
+        Serial.print(anguloObjetivo0, 1);
+        Serial.println(" grados");
+        
+        Serial.print("Moviendo Motor 1 de ");
+        Serial.print(leerAnguloBrazo(1), 1);
+        Serial.print(" a ");
+        Serial.print(anguloObjetivo1, 1);
+        Serial.println(" grados...");
+      } else {
+        Serial.println("ERROR: Valores deben estar entre 0 y 360");
+      }
+    } else {
+      Serial.println("ERROR: Formato incorrecto. Usa: angulo1,angulo2");
+    }
+  }
+
+  // Control PID en intervalo de muestreo
+  if (millis() - tiempoAnterior >= T_MUESTREO) {
+    tiempoAnterior = millis();
+    
+    if (moviendose0) controlMotor(0);
+    if (moviendose1) controlMotor(1);
+  }
+}
+
+void controlMotor(int motor) {
+  float* anguloObjetivo = (motor == 0) ? &anguloObjetivo0 : &anguloObjetivo1;
+  float* errorAcumulado = (motor == 0) ? &errorAcumulado0 : &errorAcumulado1;
+  float* errorAnterior = (motor == 0) ? &errorAnterior0 : &errorAnterior1;
+  bool* moviendose = (motor == 0) ? &moviendose0 : &moviendose1;
+  
+  float posicionActual = leerAnguloBrazo(motor);
+  float error = *anguloObjetivo - posicionActual;
+
+  // Normalizar error
+  if (error > 180) error -= 360;
+  if (error < -180) error += 360;
+
+  if (abs(error) <= TOLERANCIA) {
+    frenarMotor(motor);
+    *moviendose = false;
+    *errorAcumulado = 0;
+    *errorAnterior = 0;
+    Serial.print("Motor ");
+    Serial.print(motor);
+    Serial.print(" LISTO! Posicion: ");
+    Serial.print(posicionActual, 1);
+    Serial.println(" grados");
+  } else {
+    // Cálculo PID
+    *errorAcumulado += error * (T_MUESTREO / 1000.0);
+    float derivada = (error - *errorAnterior) / (T_MUESTREO / 1000.0);
+    *errorAnterior = error;
+
+    float salidaPID = Kp * error + Ki * *errorAcumulado + Kd * derivada;
+    moverMotor(motor, salidaPID);
+
+    // Reporte periódico
+    static unsigned long ultimoReporte = 0;
+    if (millis() - ultimoReporte > 200) {
+      ultimoReporte = millis();
+      Serial.print("Motor ");
+      Serial.print(motor);
+      Serial.print(": Actual=");
+      Serial.print(posicionActual, 1);
+      Serial.print("° -> Objetivo=");
+      Serial.print(*anguloObjetivo, 1);
+      Serial.print("° (error=");
+      Serial.print(error, 1);
+      Serial.println("°)");
+    }
+  }
+}
