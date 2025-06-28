@@ -1,8 +1,10 @@
-<div style="display: flex; justify-content: center; margin: 20px 0;">
-  <img src="./assets/fi_logo.png.png" 
+<p align="left">
+  <img src="./assets/fi_logo.png" 
        alt="Diagrama de Diseño Funcional" 
-       style="width: 227px; height: 151px; object-fit: cover; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-</div>
+       width="227" 
+       height="151"
+       style="object-fit: cover; border: 1px solid #f0f0f0;">
+</p>
 
 # SignApp
 
