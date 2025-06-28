@@ -345,7 +345,9 @@ textarea {
     z-index: 100;
     font-size: 1.2rem;
 }
-
+.black-text {
+  color: #000000;
+}
 /* Responsive */
 @media (max-width: 768px) {
     .navbar {
