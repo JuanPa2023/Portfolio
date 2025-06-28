@@ -1,10 +1,9 @@
-<div style="display: flex; justify-content: center;">
-  <div style="width: 227px; height: 151px; overflow: hidden; border: 1px solid #ddd;">
-    <img src="./assets/fi_logo.png.png" 
-         alt="Diagrama de Diseño Funcional" 
-         style="width: 100%; height: 100%; object-fit: cover;">
-  </div>
+<div style="display: flex; justify-content: center; margin: 20px 0;">
+  <img src="./assets/fi_logo.png.png" 
+       alt="Diagrama de Diseño Funcional" 
+       style="width: 227px; height: 151px; object-fit: cover; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
 </div>
+
 # SignApp
 
 “SignApp” es una aplicación móvil desarrollada en el marco de la Práctica Profesional Supervisada de Ingeniería, que ofrece interpretación bidireccional automática entre la Lengua de Señas Argentina (LSA) y el lenguaje oral, sin requerir hardware adicional. Su objetivo es fomentar la inclusión de la comunidad sorda en diversos ámbitos mediante tecnologías de visión por computadora, inteligencia artificial y procesamiento de señales.
