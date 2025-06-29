@@ -10,15 +10,15 @@ Permitir el ingreso de un ángulo deseado desde el monitor serie, calcular el er
 
 - Motor DC con reducción
 - Encoder magnético AS5600
-- Puente H (controlado mediante IN1, IN2 y ENA)
-- Arduino UNO
-- Fuente de alimentación externa
+- Puente H (L298)
+- ESP 32 DOVKIT V1
+- Fuente de alimentación externa 12V
 
 ## 🧠 Principales características del sistema
 
 ### Lectura del sensor
 - Conversión de valor RAW (0–4095) a grados (0–360)
-- Definición de una referencia inicial (posición 0° al encender)
+- Definición de una referencia inicial (posición 0° al encender, recomendado poiscionar en 10, 0)
 - Corrección de discontinuidades angulares (salto 360° → 0°)
 - Resultado: ángulo relativo en el rango [-180°, +180°]
 
@@ -46,8 +46,9 @@ Permitir el ingreso de un ángulo deseado desde el monitor serie, calcular el er
 
 1. Cargar el código en el Arduino.
 2. Abrir el monitor serie a 115200 baudios.
-3. Con la Cinematica Directa ingresar un valor en grados (ej: `30` o `-45`).
-5. Ahora con cinematica Inversa podemos agregar directamene las coordenadas cartesiandas x e y
+3. Seleccionar Cinematica directa con 1 o inversa con 2
+4. Con la Cinematica Directa ingresar un valor en grados (ej: `30` o `-45`).
+5. Con la Cinematica Inversa ingresar un valor en coordenadas cartesiandas (ej: X= 5, Y=5)
 6. El motor se moverá la cantidad indicada respecto a su posición actual.
 
 
