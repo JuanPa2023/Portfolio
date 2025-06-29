@@ -110,6 +110,14 @@ Seleccione modo de operación:
 
 ![Captura del proyecto](screenshot.png)
 
+
+https://github.com/user-attachments/assets/556c2c6b-91e2-4d48-9d5b-aafe8935a4f7
+
+
+
+https://github.com/user-attachments/assets/79582b5e-8789-4065-9df4-1b9771a994f8
+
+
 ## 📁 Archivos incluidos
 
 - `main.ino`: código completo del sistema
