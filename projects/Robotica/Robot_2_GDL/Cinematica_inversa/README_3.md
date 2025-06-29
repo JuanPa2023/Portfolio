@@ -1,5 +1,5 @@
 # Robótica – Cinemática Inversa para Brazo de 2 Grados de Libertad
-
+ 
 Este proyecto implementa el control de posición angular para un brazo robótico de 2 grados de libertad utilizando un motor DC, un sensor AS5600 (encoder magnético) y un controlador proporcional (P). Está escrito en C++ para la plataforma Arduino.
 
 ## 🎯 Objetivo
