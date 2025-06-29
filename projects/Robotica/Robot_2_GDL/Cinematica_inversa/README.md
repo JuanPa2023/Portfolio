@@ -106,16 +106,22 @@ Seleccione modo de operación:
 5. Ingresar `2` + ENTER para cinemática inversa y escribir “x,y” (cm).  
 6. El sistema mostrará cálculos y moverá los motores hasta la posición deseada.  
 
-## 📸 Captura
+## 📸 Capturas y Funcionamiento
 
 ![Captura del proyecto](screenshot.png)
 
 
-https://github.com/user-attachments/assets/556c2c6b-91e2-4d48-9d5b-aafe8935a4f7
+
+https://github.com/user-attachments/assets/fbe9209d-be4b-495e-834e-1509b448d2aa
 
 
 
-https://github.com/user-attachments/assets/79582b5e-8789-4065-9df4-1b9771a994f8
+
+https://github.com/user-attachments/assets/4a18f0a9-47c6-4eb9-9952-6b54f74541a8
+
+
+
+https://github.com/user-attachments/assets/9b6261e0-5f73-4eb6-aaa3-88af923ea95c
 
 
 ## 📁 Archivos incluidos
