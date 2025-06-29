@@ -110,6 +110,12 @@ Seleccione modo de operación:
 
 ![Captura del proyecto](screenshot.png)
 
+## 📁 Archivos incluidos
+
+- `main.ino`: código completo del sistema
+- `screenshot.png`: imagen de referencia visual del proyecto
+
+
 ---
 
 Desarrollado como entregable para la materia **Fundamentos de Robótica**.  
