@@ -157,12 +157,36 @@ Versión futura (objetivo):
 
 ![image](https://github.com/user-attachments/assets/ef6916fb-c80a-49b1-bee0-212ee2517911)
 
+---
+
+## 🧠 Diseño Tecnológico
+
+https://github.com/user-attachments/assets/086edb73-e3c7-4bce-8915-1c92f5614015
+
+
+
+https://github.com/user-attachments/assets/3e5bde61-227f-4871-bd4b-6342afbe68de
+
 
 ---
 
 ## 📍 Pinout del Microcontrolador
 
 ![image](https://github.com/user-attachments/assets/02bc291e-e018-4a9b-af88-3c8914a4b226)
+
+---
+
+## ⚙️ Funcionamiento
+
+https://github.com/user-attachments/assets/189d3eb0-2210-4df0-a2b1-ee9590bcee17
+
+
+
+https://github.com/user-attachments/assets/a4b8c46b-17fa-40ab-ac6b-2e00afe212c2
+
+
+
+https://github.com/user-attachments/assets/49642b63-70a9-4ae9-b10c-25bc1dbe0741
 
 
 ---
