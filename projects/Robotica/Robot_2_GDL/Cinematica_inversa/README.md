@@ -110,18 +110,9 @@ Seleccione modo de operación:
 
 ![Captura del proyecto](screenshot.png)
 
-
-
-https://github.com/user-attachments/assets/fbe9209d-be4b-495e-834e-1509b448d2aa
-
-
-
-
-https://github.com/user-attachments/assets/4a18f0a9-47c6-4eb9-9952-6b54f74541a8
-
-
-
-https://github.com/user-attachments/assets/9b6261e0-5f73-4eb6-aaa3-88af923ea95c
+<video src="https://github.com/user-attachments/assets/4a18f0a9-47c6-4eb9-9952-6b54f74541a8.mp4" controls style="max-width:100%;"></video>
+<video src="https://github.com/user-attachments/assets/fbe9209d-be4b-495e-834e-1509b448d2aa.mp4" controls style="max-width:100%;"></video>
+<video src="https://github.com/user-attachments/assets/9b6261e0-5f73-4eb6-aaa3-88af923ea95c.mp4" controls style="max-width:100%;"></video>
 
 
 ## 📁 Archivos incluidos
