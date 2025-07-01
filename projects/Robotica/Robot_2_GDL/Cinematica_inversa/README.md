@@ -1,6 +1,7 @@
 # Robótica – Cinemática Directa e Inversa para Brazo de 2 Grados de Libertad
 
 Este proyecto implementa el control de posición angular de un brazo robótico de 2 grados de libertad usando dos motores DC, dos encoders magnéticos AS5600 y un controlador PID. Permite alternar entre cinemática directa (calcular posición cartesiana a partir de ángulos) y cinemática inversa (calcular ángulos necesarios para alcanzar una coordenada X,Y), todo vía monitor serie.
+![deepseek_mermaid_20250701_7d3c3b](https://github.com/user-attachments/assets/3bde23ec-0587-4a02-9a0d-a4544220e5c3)
 
 ## 🎯 Objetivo
 
